@@ -38,16 +38,16 @@ frontend/
 - Java 17
 - Node.js and npm
 - MySQL
-- Razorpay and Cloudinary credentials for payment and document-upload features
-- SMTP credentials if email-based workflows are required
+
+Razorpay and Cloudinary accounts are needed only for payment and document-upload features. Configure SMTP credentials if you use email-based workflows.
 
 ## Configuration
 
-Create a MySQL database for the application, then configure the backend's local Spring Boot settings in `backend/insurance-management/src/main/resources/application.properties`. This file is not included in the repository. At minimum, configure the MySQL datasource (`spring.datasource.url`, `spring.datasource.username`, and `spring.datasource.password`), along with the `cloudinary.cloud-name`, `cloudinary.api-key`, `cloudinary.api-secret`, `razorpay.key-id`, and `razorpay.key-secret` properties.
+Create a MySQL database for the application, then add local Spring Boot settings in `backend/insurance-management/src/main/resources/application.properties`. This file is not included in the repository. Configure the MySQL datasource (`spring.datasource.url`, `spring.datasource.username`, and `spring.datasource.password`). Add `cloudinary.cloud-name`, `cloudinary.api-key`, and `cloudinary.api-secret` for document uploads, `razorpay.key-id` and `razorpay.key-secret` for payments, and the relevant `spring.mail.*` settings for email.
 
-Configure SMTP settings with the `spring.mail.*` properties if you use email workflows. Keep credentials in local configuration or environment variables; do not commit secrets.
+Keep credentials in local configuration or environment variables; do not commit secrets.
 
-The frontend currently sends API requests to `http://localhost:8080`. Run the backend on that address when using the frontend locally.
+The frontend sends API requests to `http://localhost:8080`. Run the backend on that address for local development; requests will need a different frontend API URL if the backend is hosted elsewhere.
 
 ## Run locally
 
@@ -68,7 +68,7 @@ In a second terminal, from the repository root:
 
 ```powershell
 cd frontend\insurance-mgmt
-npm install
+npm ci
 npm start
 ```
 
