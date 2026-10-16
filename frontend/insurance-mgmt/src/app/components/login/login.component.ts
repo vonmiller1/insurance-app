@@ -50,26 +50,12 @@ export class LoginComponent {
     return this.loginForm.get('password');
   }
 
-  // onLogin() {
-  //   if (!this.loginForm.valid || !this.captchaResolved) {
-  //     console.log('Please complete the form and CAPTCHA');
-  //     return;
-  //   }
-  
-  //   const loginData = this.loginForm.value;
-  
-  //   this.authService.loginAndRedirect(loginData, this.captchaResolved).subscribe({
-  //     next: () => console.log('Login & Redirect Successful'),
-  //     error: err => console.error('Login failed', err)
-  //   });
-  // }
-
   onLogin(): void {
     if (this.loginForm.invalid || !this.captchaResolved) return;
-  
+
     const loginData = this.loginForm.value;
-  
-    this.authService.loginAndRedirect(loginData, this.captchaResolved , loginData).subscribe({
+
+    this.authService.loginAndRedirect(loginData, this.captchaResolved).subscribe({
       error: (err) => {
         console.error('Login error:', err);
         if (err.status === 401 || err.status === 403 || err.status === 404) {

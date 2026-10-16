@@ -55,40 +55,38 @@ public class AuthServiceImpl implements AuthService{
 
 	@Override
 	public JwtAuthResponse login(LoginDTO loginDto) {
-	    try {
-	        Authentication authentication = authManager.authenticate(
-	            new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
-	        
-	        SecurityContextHolder.getContext().setAuthentication(authentication);
-	        String token = tokenProvider.generateToken(authentication);
-	        
-	        String role = authentication.getAuthorities().stream()
-	            .findFirst()
-	            .map(authority -> authority.getAuthority())
-	            .map(auth -> auth.replace("ROLE_", ""))
-	            .orElse("DEFAULT");
-	        
-	        JwtAuthResponse authResponse = new JwtAuthResponse();
-	        User user = userRepo.findByUsername(loginDto.getUsername())
-	            .orElseThrow(() -> new RuntimeException("Error"));
-	        
-	        authResponse.setUserId(user.getUserId());
-	        authResponse.setAccessToken(token);
-	        authResponse.setRole(role);
-	        authResponse.setName(user.getFirstName() + " " +  user.getLastName());
-	        
-	        // Set licenseNumber only if user is an Agent
-	        if ("AGENT".equals(role)) {
-	            // We need to fetch the Agent entity since User doesn't have licenseNumber
-	            Agent agent = agentRepo.findByUserId(user.getUserId())
-	                .orElseThrow(() -> new RuntimeException("Agent not found for this user"));
-	            authResponse.setLicenseNumber(agent.getLicenseNumber());
-	        }
-	        
-	        return authResponse;
-	    } catch(BadCredentialsException e) {
-	        throw new UserApiException(HttpStatus.NOT_FOUND, "Username or Password is incorrect");
-	    }
+		try {
+			Authentication authentication = authManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			String token = tokenProvider.generateToken(authentication);
+
+			String role = authentication.getAuthorities().stream()
+				.findFirst()
+				.map(authority -> authority.getAuthority())
+				.map(auth -> auth.replace("ROLE_", ""))
+				.orElse("DEFAULT");
+
+			JwtAuthResponse authResponse = new JwtAuthResponse();
+			User user = userRepo.findByUsername(loginDto.getUsername())
+				.orElseThrow(() -> new UserApiException(HttpStatus.NOT_FOUND, "User not found"));
+
+			authResponse.setUserId(user.getUserId());
+			authResponse.setAccessToken(token);
+			authResponse.setRole(role);
+			authResponse.setName(user.getFirstName() + " " + user.getLastName());
+
+			if ("AGENT".equals(role)) {
+				Agent agent = agentRepo.findByUserId(user.getUserId())
+					.orElseThrow(() -> new UserApiException(HttpStatus.NOT_FOUND, "Agent not found for this user"));
+				authResponse.setLicenseNumber(agent.getLicenseNumber());
+			}
+
+			return authResponse;
+		} catch (BadCredentialsException e) {
+			throw new UserApiException(HttpStatus.UNAUTHORIZED, "Username or Password is incorrect");
+		}
 	}
 
 	@Override
