@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -40,27 +41,26 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-	  SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
-		http.csrf(csrf -> csrf.disable()).cors(withDefaults());
-	    http.sessionManagement(session -> session.sessionCreationPolicy(STATELESS));
-	    
-	    http.authorizeHttpRequests(request -> request.requestMatchers("/app/register/**").permitAll());
-	    http.authorizeHttpRequests(request -> request.requestMatchers("/app/login").permitAll());
-	    http.authorizeHttpRequests(request -> request.requestMatchers("/app/password/forgot-password").permitAll());
-	    http.authorizeHttpRequests(request -> request.requestMatchers("/app/password/reset-password").permitAll());
-	    http.authorizeHttpRequests(request -> request.requestMatchers("/app/documents/**").permitAll());
-	    http.authorizeHttpRequests(request -> request.requestMatchers("/app/payments/**").permitAll());
-	    http.authorizeHttpRequests(request -> request.requestMatchers("/app/insuranceplans/**").permitAll());
-	    http.authorizeHttpRequests(request -> request.requestMatchers("/app/insurancetypes/**").permitAll());
-	   
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.csrf(AbstractHttpConfigurer::disable)
+			.cors(withDefaults())
+			.sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+			.exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint))
+			.authorizeHttpRequests(auth -> auth
+				.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+				.requestMatchers(
+						"/app/register/**",
+						"/app/login",
+						"/app/password/forgot-password",
+						"/app/password/reset-password",
+						"/app/documents/**",
+						"/app/payments/**",
+						"/app/insuranceplans/**",
+						"/app/insurancetypes/**"
+				).permitAll()
+				.anyRequest().authenticated())
+			.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-	    http.authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.GET, "/app/"));
-	    http.authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.POST, "/app/"));
-	    http.authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.PUT, "/app/"));
-	    http.authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.DELETE, "/app/"));
-	    http.exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint));
-	    http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
-	    http.authorizeHttpRequests(request -> request.anyRequest().authenticated());
-	    return http.build();
-	  }
+		return http.build();
+	}
 }
