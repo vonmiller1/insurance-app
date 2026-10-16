@@ -1,0 +1,69 @@
+<nav class="navbar">
+  <a routerLink="/" class="logo">
+    <img src="https://png.pngtree.com/template/20190316/ourmid/pngtree-insurance-logo-vector-image_80261.jpg" style="height: 50px; width: 50px;" alt="Logo" class="logo-img">
+    ClaimSure LIC
+  </a>
+  <div class="nav-buttons">
+    <a routerLink="/login" class="nav-btn">Login</a>
+    <a routerLink="/register" class="nav-btn outline">Register</a>
+  </div>
+</nav>
+
+<div class="login-container">
+  <div class="card animate__animated animate__fadeIn">
+    <h2 class="card-title">Login</h2>
+    <div *ngIf="errorMessage" class="server-error">
+      {{ errorMessage }}
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <div class="form-group">
+        <input type="text" formControlName="username" placeholder="Username" class="form-control" />
+        <div *ngIf="username?.touched && username?.invalid" class="error">
+          <small *ngIf="username?.errors?.['required']">Username is required.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="password" formControlName="password" placeholder="Password" class="form-control" />
+        <div *ngIf="password?.touched && password?.invalid" class="error">
+          <small *ngIf="password?.errors?.['required']">Password is required.</small>
+        </div>
+      </div>
+
+      <ngx-recaptcha2 *ngIf="isBrowser" [siteKey]="siteKey" (success)="onCaptchaResolved($event)">
+      </ngx-recaptcha2>
+
+      <button type="submit" class="btn btn-login" [disabled]="!loginForm.valid || !captchaResolved">
+        Login
+      </button>
+    </form>
+
+    <p>Don't have an account? <a routerLink="/register">Register here</a></p>
+    <p class="forgot-password"><a routerLink="/forgot-password">Forgot Password?</a></p>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h4>ClaimSure LIC</h4>
+      <p>Providing top-notch insurance solutions since 2025.</p>
+    </div>
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a routerLink="/login">Login</a></li>
+        <li><a routerLink="/register">Register</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Contact</h4>
+      <p>Email: claimsurelic&#64;gmail.com</p>
+      <p>Phone: 7654123490</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 ClaimSure LIC. All rights reserved.</p>
+  </div>
+</footer>

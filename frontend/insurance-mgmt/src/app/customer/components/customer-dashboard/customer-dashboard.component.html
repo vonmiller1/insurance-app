@@ -1,0 +1,101 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<app-navbar></app-navbar>
+<div class="customer-dashboard bg-light min-vh-100 py-5">
+  
+
+  <div class="container">
+    <h1 class="text-center fw-bold mb-2 text-primary display-5">Customer Dashboard</h1>
+    <h4 class="text-center mb-5 text-secondary">Welcome {{customerName}}</h4>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
+      
+      <!-- Profile Management -->
+      <div class="col">
+        <div class="card glass-card h-100 border-0 shadow-lg">
+          <div class="card-body text-center">
+            <i class="bi bi-people-fill fs-2 text-primary mb-3"></i>
+            <h5 class="card-title fw-semibold">Profile Management</h5>
+            <p class="card-text text-muted">Update your profile and change password.</p>
+            <a routerLink="/customer/profile" class="btn btn-outline-primary">Manage Profile</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Policies -->
+      <div class="col">
+        <div class="card glass-card h-100 border-0 shadow-lg">
+          <div class="card-body text-center">
+            <i class="bi bi-journal fs-2 text-success mb-3"></i>
+            <h5 class="card-title fw-semibold">Policies</h5>
+            <p class="card-text text-muted">Register for policies.</p>
+            <a routerLink="/customer/policies" class="btn btn-outline-success">Manage Policies</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payments -->
+      <div class="col">
+        <div class="card glass-card h-100 border-0 shadow-lg">
+          <div class="card-body text-center">
+            <i class="bi bi-credit-card-fill fs-2 text-info mb-3"></i>
+            <h5 class="card-title fw-semibold">Payments</h5>
+            <p class="card-text text-muted">View payment reciepts pay your insurance premiums.</p>
+            <a routerLink="/customer/payments" class="btn btn-outline-info">View Payments</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Policies Claim -->
+      <div class="col">
+        <div class="card glass-card h-100 border-0 shadow-lg">
+          <div class="card-body text-center">
+            <i class="bi bi-journal fs-2 text-success mb-3"></i>
+            <h5 class="card-title fw-semibold">Policy Claim</h5>
+            <p class="card-text text-muted">Claim your policies.</p>
+            <a routerLink="/customer/policy-claim" class="btn btn-outline-success">Manage Policies</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Policies Cancel -->
+      <div class="col">
+        <div class="card glass-card h-100 border-0 shadow-lg">
+          <div class="card-body text-center">
+            <i class="bi bi-journal fs-2 text-success mb-3"></i>
+            <h5 class="card-title fw-semibold">Policies Cancellation</h5>
+            <p class="card-text text-muted">Cancel your policies.</p>
+            <a routerLink="/customer/policy-cancel" class="btn btn-outline-success">Manage Policies</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Withdrawls -->
+      <!-- <div class="col">
+        <div class="card glass-card h-100 border-0 shadow-lg">
+          <div class="card-body text-center">
+            <i class="bi bi-bar-chart-line-fill fs-2 text-info mb-3"></i>
+            <h5 class="card-title fw-semibold">Withdrawals</h5>
+            <p class="card-text text-muted">Request policy withdrawl</p>
+            <a routerLink="/customer/withdrawals" class="btn btn-outline-info">View Reports</a>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Contact Us -->
+      
+      <div class="col">
+        <div class="card glass-card h-100 border-0 shadow-lg">
+          <div class="card-body text-center">
+            <i class="bi bi-person-lines-fill fs-2 text-warning mb-3"></i>
+            <h5 class="card-title fw-semibold">Support</h5>
+            <p class="card-text text-muted">Send queries or view query responses from admin.</p>
+            <a routerLink="/customer/contact" class="btn btn-outline-warning">Contact Us</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

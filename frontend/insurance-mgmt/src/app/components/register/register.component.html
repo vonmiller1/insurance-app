@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - ClaimSure LIC</title>
+</head>
+<body>
+  <nav class="navbar">
+    <a routerLink="/" class="logo">
+      <img src="https://png.pngtree.com/template/20190316/ourmid/pngtree-insurance-logo-vector-image_80261.jpg" style="height: 50px; width: 50px;" alt="Logo" class="logo-img">
+    ClaimSure LIC
+    </a>
+    <div class="nav-buttons">
+      <a routerLink="/login" class="nav-btn">Login</a>
+      <a routerLink="/register" class="nav-btn outline">Register</a>
+    </div>
+  </nav>
+
+  <div class="register-container">
+    <div class="card animate__animated animate__fadeIn">
+      <h2 class="card-title">Create Account</h2>
+
+      <div class="error-general" *ngIf="generalError">{{ generalError }}</div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="register-form">
+        <div class="form-group">
+          <input
+            type="text"
+            formControlName="username"
+            placeholder="Username"
+            class="form-control"
+            [class.error]="hasError('username')"
+          />
+          <div class="error" *ngIf="hasError('username')">{{ getError('username') }}</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half">
+            <input
+              type="text"
+              formControlName="firstName"
+              placeholder="First Name"
+              class="form-control"
+              [class.error]="hasError('firstName')"
+            />
+            <div class="error" *ngIf="hasError('firstName')">{{ getError('firstName') }}</div>
+          </div>
+          <div class="form-group half">
+            <input
+              type="text"
+              formControlName="lastName"
+              placeholder="Last Name"
+              class="form-control"
+              [class.error]="hasError('lastName')"
+            />
+            <div class="error" *ngIf="hasError('lastName')">{{ getError('lastName') }}</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Email"
+            class="form-control"
+            [class.error]="hasError('email')"
+          />
+          <div class="error" *ngIf="hasError('email')">{{ getError('email') }}</div>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Password"
+            class="form-control"
+            [class.error]="hasError('password')"
+          />
+          <div class="error" *ngIf="hasError('password')">{{ getError('password') }}</div>
+        </div>
+
+        <div class="form-group">
+          <select formControlName="role" class="form-control" [class.error]="hasError('role')">
+            <option value="" disabled>Select Role</option>
+            <option value="CUSTOMER">Customer</option>
+            <option value="EMPLOYEE">Employee</option>
+            <option value="AGENT">Agent</option>
+          </select>
+          <div class="error" *ngIf="hasError('role')">{{ getError('role') }}</div>
+        </div>
+
+        <!-- Customer Fields -->
+        <div *ngIf="registerForm.get('role')?.value === 'CUSTOMER'" class="role-section">
+          <h4>Customer Details</h4>
+          <div class="form-group">
+            <input
+              type="text"
+              formControlName="address"
+              placeholder="Address"
+              class="form-control"
+              [class.error]="hasError('address')"
+            />
+            <div class="error" *ngIf="hasError('address')">{{ getError('address') }}</div>
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              formControlName="phoneNumber"
+              placeholder="Phone Number"
+              class="form-control"
+              [class.error]="hasError('phoneNumber')"
+            />
+            <div class="error" *ngIf="hasError('phoneNumber')">{{ getError('phoneNumber') }}</div>
+          </div>
+        </div>
+
+        <!-- Employee Fields -->
+        <div *ngIf="registerForm.get('role')?.value === 'EMPLOYEE'" class="role-section">
+          <h4>Employee Details</h4>
+          <div class="form-group">
+            <input
+              type="text"
+              formControlName="department"
+              placeholder="Department"
+              class="form-control"
+              [class.error]="hasError('department')"
+            />
+            <div class="error" *ngIf="hasError('department')">{{ getError('department') }}</div>
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              formControlName="designation"
+              placeholder="Designation"
+              class="form-control"
+              [class.error]="hasError('designation')"
+            />
+            <div class="error" *ngIf="hasError('designation')">{{ getError('designation') }}</div>
+          </div>
+        </div>
+
+        <!-- Agent Fields -->
+        <div *ngIf="registerForm.get('role')?.value === 'AGENT'" class="role-section">
+          <h4>Agent Info</h4>
+          <div class="form-group">
+            <input
+              type="text"
+              formControlName="licenseNumber"
+              placeholder="License Number"
+              class="form-control"
+              [class.error]="hasError('licenseNumber')"
+            />
+            <div class="error" *ngIf="hasError('licenseNumber')">{{ getError('licenseNumber') }}</div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-register" [disabled]="registerForm.invalid">
+          Register
+        </button>
+      </form>
+      <p>Already have an account? <a routerLink="/login">Login here</a></p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>ClaimSure LIC</h4>
+        <p style="color: #fff;">Providing top-notch insurance solutions since 2025.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a routerLink="/login">Login</a></li>
+          <li><a routerLink="/register">Register</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p style="color: #fff;">Email: claimsurelic&#64;gmail.com</p>
+        <p style="color: #fff;">Phone: 7654123490</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 ClaimSure LIC. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
