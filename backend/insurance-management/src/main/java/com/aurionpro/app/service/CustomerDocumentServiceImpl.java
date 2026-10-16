@@ -22,6 +22,7 @@ import com.aurionpro.app.entity.DocumentStatus;
 import com.aurionpro.app.entity.DocumentType;
 import com.aurionpro.app.entity.Employee;
 import com.aurionpro.app.exceptions.ResourceNotFoundException;
+import com.aurionpro.app.exceptions.UserApiException;
 import com.aurionpro.app.repository.CustomerDocumentRepository;
 import com.aurionpro.app.repository.CustomerRepository;
 import com.aurionpro.app.repository.EmployeeRepository;
@@ -46,6 +47,10 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService{
 
 	@Override
 	public String uploadDocument(int customerId, DocumentType documentType, MultipartFile file) {
+		if (file == null || file.isEmpty()) {
+			throw new UserApiException(HttpStatus.BAD_REQUEST, "Upload file is required");
+		}
+
 		Optional<Customer> customerOpt = customerRepository.findById(customerId);
 		if(customerOpt.isEmpty()) {
 			throw new RuntimeException("Customer not found");
