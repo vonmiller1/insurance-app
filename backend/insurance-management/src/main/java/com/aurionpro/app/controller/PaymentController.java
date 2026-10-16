@@ -1,6 +1,7 @@
 package com.aurionpro.app.controller;
 
 import com.aurionpro.app.dto.CreatePremiumPaymentRequestDTO;
+import com.aurionpro.app.exceptions.UserApiException;
 import com.aurionpro.app.dto.PaymentOrderResponseDTO;
 import com.aurionpro.app.dto.VerifyPaymentRequestDTO;
 import com.aurionpro.app.service.CustomerPolicyService;
@@ -31,6 +32,9 @@ public class PaymentController {
 
 	@PostMapping("/create-order")
 	public PaymentOrderResponseDTO createOrder(@RequestBody CreatePremiumPaymentRequestDTO request) throws RazorpayException {
+		if (request.getAmount() == null || request.getAmount().signum() <= 0) {
+			throw new UserApiException(HttpStatus.BAD_REQUEST, "Payment amount must be greater than zero");
+		}
 		String orderId = paymentService.createPaymentOrder(request.getCustomerPolicyId(), request.getAmount());
 		int amountInPaise = request.getAmount().multiply(BigDecimal.valueOf(100)).intValue();
 		return new PaymentOrderResponseDTO(orderId, "INR", amountInPaise);
