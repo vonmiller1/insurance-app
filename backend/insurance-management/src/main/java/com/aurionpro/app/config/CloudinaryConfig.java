@@ -9,22 +9,21 @@ import com.cloudinary.utils.ObjectUtils;
 
 @Configuration
 public class CloudinaryConfig {
-	
-	@Value("${cloudinary.cloud-name}")
+	@Value("${cloudinary.cloud-name:}")
 	private String cloudName;
-	
-	@Value("${cloudinary.api-key}")
+
+	@Value("${cloudinary.api-key:}")
 	private String cloudApiKey;
-	
-	@Value("${cloudinary.api-secret}")
+
+	@Value("${cloudinary.api-secret:}")
 	private String cloudApiSecret;
-	
+
 	@Bean
 	public Cloudinary cloudinary() {
 		return new Cloudinary(ObjectUtils.asMap(
-	            "cloud_name", cloudName,
-	            "api_key", cloudApiKey,
-	            "api_secret", cloudApiSecret
-	        ));
+			"cloud_name", cloudName,
+			"api_key", cloudApiKey,
+			"api_secret", cloudApiSecret
+		));
 	}
 }
