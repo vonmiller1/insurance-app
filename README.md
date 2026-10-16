@@ -1,92 +1,67 @@
 # Insurance Management System
 
-This is a capstone project that serves as an Insurance Management System, developed using a Java Spring Boot backend and an Angular frontend. This project follows an industry-level structure and is designed for scalability and maintainability.
+An insurance management application with a Java and Spring Boot backend and an Angular frontend. It supports insurance workflows such as user authentication, policy management, claims, payments, reporting, and document handling.
 
-## Repository Structure
-```
-📂 insurance-management
-│── 📁 backend
-│   ├── 📁 src
-│   │   ├── 📂 main/java/com/insurance
-│   │   │   ├── 📁 config
-│   │   │   ├── 📁 controller
-│   │   │   ├── 📁 dto
-│   │   │   ├── 📁 entity
-│   │   │   ├── 📁 exception
-│   │   │   ├── 📁 repository
-│   │   │   ├── 📁 security
-│   │   │   ├── 📁 service
-│   │   │   │   ├── 📁 impl
-│   │   │   ├── 📁 util
-│   │   ├── 📂 resources
-│── 📁 frontend
-│   ├── 📁 src
-│   │   ├── 📁 app
-│   │   │   ├── 📁 components
-│   │   │   ├── 📁 services
-│   │   │   ├── 📝 app.component.ts
-│   │   ├── 📂 assets
-│   ├── 📝 angular.json
-│── 📁 documentation
-│── 📄 README.md
-│── 📄 .gitignore
-│── 📄 package.json
-│── 📄 build.gradle / pom.xml
+## Project structure
+
+```text
+backend/
+  insurance-management/   Spring Boot application
+frontend/
+  insurance-mgmt/         Angular application
 ```
 
-## Technologies Used
-- **Backend:** Java, Spring Boot, Hibernate, MySQL
-- **Frontend:** Angular, TypeScript, HTML, CSS
-- **Other Tools:** Git, IntelliJ, VS Code
+## Technology stack
 
-## Core Services
-- User Management and Authentication
-- Admin Management and Reporting
-- Policy and Claim Handling
-- Commission Calculation
-- Email Notifications
-- Payment Gateway Integration
-- Cloud Storage for Images and Documents
+- **Backend:** Java 17, Spring Boot 3, Spring Security, Spring Data JPA, Maven
+- **Frontend:** Angular 19, TypeScript, Bootstrap
+- **Database:** MySQL
+- **Integrations:** Razorpay payments, Cloudinary storage, and email
 
-## How to Run
-### Backend
-1. Navigate to the backend folder:
-   ```sh
-   cd backend
-   ```
-2. Build and run using Gradle/Maven:
-   ```sh
-   ./gradlew bootRun  # For Gradle
-   mvn spring-boot:run  # For Maven
-   ```
-3. API will be accessible at `http://localhost:8080`
+## Prerequisites
 
-### Frontend
-1. Navigate to the frontend folder:
-   ```sh
-   cd frontend
-   ```
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
-3. Run the Angular application:
-   ```sh
-   ng serve
-   ```
-4. Application will be accessible at `http://localhost:4200`
+- Java 17
+- Node.js and npm
+- MySQL
 
-## Collaboration Guidelines
-- Use feature branches for new functionality
-- Open pull requests for code review
-- Follow proper commit message format
+Configure the backend's database and any required integration credentials in your local Spring configuration before starting the application. Do not commit credentials to the repository.
 
-## Future Enhancements
-- Implement Email Notifications
-- Add Multi-Factor Authentication
-- Optimize Database Queries
+## Run the backend
 
----
-Happy Coding! 🚀
+From the repository root, run:
 
+```powershell
+cd backend\insurance-management
+.\mvnw.cmd spring-boot:run
+```
 
+The backend uses port `8080` by default.
+
+## Run the frontend
+
+Open a separate terminal and run:
+
+```powershell
+cd frontend\insurance-mgmt
+npm install
+npm start
+```
+
+The Angular development server is available at `http://localhost:4200`.
+
+## Build and test
+
+Build the backend:
+
+```powershell
+cd backend\insurance-management
+.\mvnw.cmd package
+```
+
+Build or test the frontend:
+
+```powershell
+cd frontend\insurance-mgmt
+npm run build
+npm test
+```
